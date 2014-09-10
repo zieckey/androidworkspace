@@ -1,0 +1,11 @@
+package com.jely.dialogfragmentexample;
+
+import android.app.DialogFragment;
+
+public class MyDialogFragment extends DialogFragment {
+	static MyDialogFragment newInstance(String title) {
+		MyDialogFragment f = new MyDialogFragment();
+		Bundle agrs = new Bundle();
+		args.putS
+	}
+}

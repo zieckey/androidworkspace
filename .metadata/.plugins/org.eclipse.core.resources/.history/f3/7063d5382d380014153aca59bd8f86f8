@@ -1,0 +1,93 @@
+package com.jlteck.earthquakeactivity;
+
+import java.io.InputStream;
+import java.net.HttpURLConnection;
+import java.net.URL;
+import java.net.URLConnection;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.GregorianCalendar;
+
+import javax.xml.parsers.DocumentBuilder;
+import javax.xml.parsers.DocumentBuilderFactory;
+
+import org.w3c.dom.Element;
+import org.w3c.dom.Document;;
+import org.w3c.dom.NodeList;
+
+import android.app.ListFragment;
+import android.location.Location;
+import android.os.Bundle;
+import android.os.Handler;
+import android.util.Log;
+import android.widget.ArrayAdapter;
+
+public class EarthquakeListFragment extends ListFragment {
+	ArrayAdapter<Quake> aa;
+	ArrayList<Quake> earthquakes = new ArrayList<Quake>();
+	
+	private static final String TAG = "EARTHQUAKE";
+	private Handler handler = new Handler();
+	
+	public void onActivityCreated(Bundle savedInstanceState) {
+		super.onActivityCreated(savedInstanceState);
+		
+		int layoutID = android.R.layout.simple_list_item_1;
+		aa = new ArrayAdapter<Quake>(getActivity(), layoutID, earthquakes);
+		setListAdapter(aa);
+	}
+	
+	public void refreshEarthquakes() {
+		URL url;
+		try {
+			String feed = getString(R.string.quake_feed);
+			url = new URL(feed);
+			URLConnection conn = url.openConnection();
+			
+			HttpURLConnection httpconn = (HttpURLConnection)conn;
+			int respCode = httpconn.getResponseCode();
+			if (respCode == HttpURLConnection.HTTP_OK) {
+				InputStream in = httpconn.getInputStream();
+				DocumentBuilderFactory f = DocumentBuilderFactory.newInstance();
+				DocumentBuilder db = f.newDocumentBuilder();
+				
+				Document dom = db.parse(in);
+				Element docEle = dom.getDocumentElement();
+				
+				earthquakes.clear();
+				
+				NodeList nl = docEle.getElementsByTagName("entry");
+				for (int i = 0; nl != null && i < nl.getLength(); i++) {
+					Element entry = (Element)nl.item(i);
+					Element title = (Element)entry.getElementsByTagName("title").item(0);
+					Element g = (Element)entry.getElementsByTagName("georss:point").item(0);
+					Element when = (Element)entry.getElementsByTagName("updated").item(0);
+					Element link = (Element)entry.getElementsByTagName("link").item(0);
+
+					String details = title.getFirstChild().getNodeValue();
+					String hostname = "http://earthquake.usgs.gov";
+					String linkString = hostname + link.getAttribute("href");
+					
+					String Point = g.getFirstChild().getNodeValue();
+					String dt = when.getFirstChild().getNodeValue();
+					SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
+					Date qdate = new GregorianCalendar(0, 0, 0).getTime();
+					
+					try {
+						qdate = sdf.parse(dt);
+					} catch (ParseException e) {
+						Log.d(TAG, "Date parsing exception.", e);
+					}
+					
+					String[] locations = point.split(" ");
+					Location l = new Location("dummyGPS");
+					l.setLatitude(Double.parseDouble(locations[0]));
+					l.setLongitude(Double.parseDouble(locations[1]));
+				}
+			}
+		}
+	}
+	
+}

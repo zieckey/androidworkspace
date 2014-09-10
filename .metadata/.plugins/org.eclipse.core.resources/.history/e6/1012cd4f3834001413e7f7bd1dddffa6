@@ -1,0 +1,162 @@
+package com.jely.dialog;
+
+import android.support.v7.app.ActionBarActivity;
+import android.support.v7.app.ActionBar;
+import android.support.v4.app.Fragment;
+import android.app.AlertDialog;
+import android.app.Dialog;
+import android.app.DialogFragment;
+import android.app.ProgressDialog;
+import android.content.DialogInterface;
+import android.os.Bundle;
+import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuItem;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.Toast;
+import android.os.Build;
+
+public class MainActivity extends ActionBarActivity {
+	CharSequence[] items = {"Google", "Apple", "Microsoft"};
+	boolean[] checkedItems = new boolean [items.length];
+	
+	ProgressDialog progressDialog;
+
+	@Override
+	protected void onCreate(Bundle savedInstanceState) {
+		super.onCreate(savedInstanceState);
+		setContentView(R.layout.activity_main);
+
+		if (savedInstanceState == null) {
+			getSupportFragmentManager().beginTransaction()
+					.add(R.id.container, new PlaceholderFragment()).commit();
+		}
+	}
+	
+	public void onClick(View v)	{
+		showDialog(0);
+	}
+	
+	public void onClickProgressButton(View v) {
+		showDialog(1);
+	}
+	
+	public void onClickProgressTickingButton(View v) {
+		showDialog(2);
+		progressDialog.setProgress(0);
+		new Thread(new Runnable() {
+			@Override
+			public void run() {
+				for (int i = 0; i < 100; i++) {
+					try {
+						Thread.sleep(300);
+						progressDialog.incrementProgressBy(1);
+					} catch (InterruptedException e) {
+						e.printStackTrace();
+					}
+				}
+				progressDialog.dismiss();
+			}
+		}).start();
+	}
+	
+	public Dialog onCreateDialog(int id) {
+		switch (id) {
+		case 0:
+			return new AlertDialog.Builder(this)
+			.setIcon(R.drawable.ic_launcher)
+			.setTitle("This is a dialog with some simple text")
+			.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+					@Override
+					public void onClick(DialogInterface dialog, int whichButton) {
+						Toast.makeText(getBaseContext(), "OK clicked!", Toast.LENGTH_SHORT).show();
+					}
+				}
+			)
+			.setNegativeButton("Cancel",  new DialogInterface.OnClickListener() {
+				@Override
+				public void onClick(DialogInterface arg0, int arg1) {
+					Toast.makeText(getBaseContext(), "Cancel clicked!", Toast.LENGTH_SHORT).show();
+				}
+			})
+			.setMultiChoiceItems(items, checkedItems, new DialogInterface.OnMultiChoiceClickListener() {
+				public void onClick(DialogInterface dialog, int which, boolean isChecked) {
+					Toast.makeText(getBaseContext(), 
+							items[which] + (isChecked ? " checked!" : " unchecked!"), Toast.LENGTH_SHORT).show();
+				}
+			}).create();
+		case 1:
+			final ProgressDialog dialog = ProgressDialog.show(this, "Doing something", "Please wait ...");
+			new Thread(new Runnable() {
+				@Override
+				public void run() {
+					try {
+						Thread.sleep(5000);
+						dialog.dismiss();
+					} catch (InterruptedException e) {
+						e.printStackTrace();
+					}
+				}
+			}).start();
+		case 2:
+			progressDialog = new ProgressDialog(this);
+			progressDialog.setIcon(R.drawable.ic_launcher);
+			progressDialog.setTitle("Downloading files ...");
+			progressDialog.setButton(DialogInterface.BUTTON_POSITIVE, "OK", new DialogInterface.OnClickListener() {
+				@Override
+				public void onClick(DialogInterface dialog, int which) {
+					Toast.makeText(getBaseContext(), "OK clicked!", Toast.LENGTH_SHORT).show();
+				}
+			});
+			progressDialog.setButton(DialogInterface.BUTTON_NEGATIVE, "Cancel", new DialogInterface.OnClickListener() {
+				@Override
+				public void onClick(DialogInterface dialog, int which) {
+					Toast.makeText(getBaseContext(), "Cancel clicked! which=" + which, Toast.LENGTH_SHORT).show();
+				}
+			});
+		default:
+			break;
+		}
+		
+		return null;
+	}
+
+	@Override
+	public boolean onCreateOptionsMenu(Menu menu) {
+
+		// Inflate the menu; this adds items to the action bar if it is present.
+		getMenuInflater().inflate(R.menu.main, menu);
+		return true;
+	}
+
+	@Override
+	public boolean onOptionsItemSelected(MenuItem item) {
+		// Handle action bar item clicks here. The action bar will
+		// automatically handle clicks on the Home/Up button, so long
+		// as you specify a parent activity in AndroidManifest.xml.
+		int id = item.getItemId();
+		if (id == R.id.action_settings) {
+			return true;
+		}
+		return super.onOptionsItemSelected(item);
+	}
+
+	/**
+	 * A placeholder fragment containing a simple view.
+	 */
+	public static class PlaceholderFragment extends Fragment {
+
+		public PlaceholderFragment() {
+		}
+
+		@Override
+		public View onCreateView(LayoutInflater inflater, ViewGroup container,
+				Bundle savedInstanceState) {
+			View rootView = inflater.inflate(R.layout.fragment_main, container,
+					false);
+			return rootView;
+		}
+	}
+
+}

@@ -1,0 +1,27 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/container"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    tools:context="com.example.todolist.ToDoListActivity"
+    tools:ignore="MergeRootFrame" >
+
+    <fragment
+        android:name="com.example.todolist.NewItemFragment"
+        android:id="@+id/NewItemFragment"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="@string/addItemHint" >
+    </fragment>
+
+    <fragment
+        android:name="com.example.todolist.ToDoListFragment"
+        android:id="@+id/ToDoListFragment"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/NewItemFragment" >
+    </fragment>
+
+</RelativeLayout >
+

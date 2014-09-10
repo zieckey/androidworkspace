@@ -1,0 +1,16 @@
+package com.jely.usingintent;
+import android.app.Activity;
+import android.os.Bundle;
+import android.widget.EditText;
+
+public class SecondActivity extends Activity {
+	public void onCreate(Bundle savedInstanceState) {
+		super.onCreate(savedInstanceState);
+		setContentView(R.layout.second_activity);
+	}
+	
+	pubilc void onClick(View view) {
+		Indent data = new Indent();
+		EditText username = (EditText)findViewById(R.id.txt_username);
+	}
+}

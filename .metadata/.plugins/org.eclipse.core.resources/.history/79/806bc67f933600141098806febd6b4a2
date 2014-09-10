@@ -1,0 +1,15 @@
+package com.jely.dialogfragmentexample;
+
+import android.annotation.SuppressLint;
+import android.app.DialogFragment;
+import android.os.Bundle;
+
+@SuppressLint("NewApi")
+public class MyDialogFragment extends DialogFragment {
+	static MyDialogFragment newInstance(String title) {
+		MyDialogFragment f = new MyDialogFragment();
+		Bundle args = new Bundle();
+		args.putString("title", title);
+		
+	}
+}

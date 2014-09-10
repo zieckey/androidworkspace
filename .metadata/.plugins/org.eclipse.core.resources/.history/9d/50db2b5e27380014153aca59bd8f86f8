@@ -1,0 +1,8 @@
+package com.jlteck.earthquakeactivity;
+
+public class Quake {
+	private Date date;
+	private String details;
+	private Location location;
+	
+}

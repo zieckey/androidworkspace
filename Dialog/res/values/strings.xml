@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">Dialog</string>
+    <string name="hello_world">Hello world!</string>
+    <string name="action_settings">Settings</string>
+	<string name="click_btn_text">Click to display a dialog</string>
+	<string name="click_btn2_text">Click to display a progress dialog</string>
+	<string name="click_btn3_text">Click to display a living progress dialog</string>
+	<string name="click_btn4_text">Click to display a living progress dialog</string>
+</resources>

@@ -1,0 +1,11 @@
+19:11:45 **** Rebuild of configuration Debug for project c++hello ****
+Info: Internal Builder is used for build
+g++ -O0 -g3 -Wall -c -fmessage-length=0 -o "src\\c++hello.o" "..\\src\\c++hello.cpp" 
+g++ -o c++hello.exe "src\\c++hello.o" 
+Info: Nothing to build for c++hello
+10:54:09 **** Clean-only build of configuration Debug for project c++hello ****
+rm -rf src/c++hello.d c++hello.exe src/c++hello.o 
+11:00:30 **** Rebuild of configuration Debug for project c++hello ****
+Info: Internal Builder is used for build
+g++ -O0 -g3 -Wall -c -fmessage-length=0 -o "src\\c++hello.o" "..\\src\\c++hello.cpp" 
+g++ -o c++hello.exe "src\\c++hello.o" 

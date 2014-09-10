@@ -1,0 +1,15 @@
+package com.jlteck.earthquakeactivity;
+
+import java.util.Date;
+
+import android.location.Location;
+
+public class Quake {
+	private Date date;
+	private String details;
+	private Location location;
+	private double magnitude;
+	private String link;
+	
+	public getDate
+}

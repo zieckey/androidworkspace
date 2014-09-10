@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">UsingIntent</string>
+    <string name="hello_world">Hello world!</string>
+    <string name="action_settings">Settings</string>
+    <string name="second_activity_desc">This is the Second Activity</string>
+    <string name="button_text">Display the second Activity</string>
+
+</resources>
